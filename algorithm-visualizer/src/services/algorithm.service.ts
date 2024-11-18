@@ -15,6 +15,9 @@ import { OptionsService } from "./options.service";
 export class AlgorithmService {
   private readonly algorithmList: Algorithm[];
 
+  private prevAnimationFrameId: number;
+  private prevTimeStamp: number;
+
   public currentAlgorithm?: Algorithm;
 
   constructor(
@@ -22,6 +25,7 @@ export class AlgorithmService {
     private readonly optionsService: OptionsService
   ) {
     this.algorithmList = [];
+    this.prevTimeStamp = this.prevAnimationFrameId = -1;
 
     this.registerAlgorithm(new BubbleSort());
     this.registerAlgorithm(new SelectionSort());
@@ -34,7 +38,31 @@ export class AlgorithmService {
     this.visualizerService.generateRawSortingData(this.optionsService.amountOfElements);
   }
 
-  public async startSorting() {
+  private Renderer = async (timeStamp: number) => {
+    if (this.prevTimeStamp !== -1) {
+      const deltaTime = timeStamp - this.prevTimeStamp;
+      console.log(deltaTime);
+    }
+
+    this.prevTimeStamp = timeStamp;
+    this.prevAnimationFrameId = window.requestAnimationFrame(this.Renderer);
+  };
+
+  public startSorting() {
+    this.stopSorting();
+    this.prevAnimationFrameId = window.requestAnimationFrame(this.Renderer);
+  }
+
+  public stopSorting() {
+    if (this.prevAnimationFrameId === -1) {
+      return;
+    }
+
+    window.cancelAnimationFrame(this.prevAnimationFrameId);
+    this.prevTimeStamp = this.prevAnimationFrameId = -1;
+  }
+
+  public async start() {
     const algorithm = this.currentAlgorithm;
     if (algorithm == null) {
       return;

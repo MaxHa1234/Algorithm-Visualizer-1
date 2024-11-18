@@ -19,6 +19,6 @@ export class AlgorithmDataInputComponent {
 
   public async generateData() {
     this.visualizerService.generateRawSortingData(this.optionsService.amountOfElements);
-    await this.algorithmService.startSorting();
+    await this.algorithmService.start();
   }
 }

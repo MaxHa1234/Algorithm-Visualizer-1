@@ -1,0 +1,17 @@
+.infobox {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  [data-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    content: attr(data-tooltip);
+    border: 1px solid black;
+    background: #282828;
+    padding: .25em;
+    /*cursor: help;*/
+  }
+

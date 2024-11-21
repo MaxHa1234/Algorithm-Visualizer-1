@@ -1,15 +1,17 @@
-import { Component } from "@angular/core";
+import { Component, Output } from "@angular/core";
 import { AlgorithmHandler } from "../../../services/algorithm.handler";
 import { FormsModule } from "@angular/forms";
+import { InfoboxComponent } from "../infobox/infobox.component";
 
 @Component({
   selector: "app-algorithm-selector",
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, InfoboxComponent],
   templateUrl: "./algorithm-selector.component.html",
   styleUrl: "./algorithm-selector.component.css",
 })
 export class AlgorithmSelectorComponent {
+
   constructor(protected readonly algorithmHandler: AlgorithmHandler) {}
 
   public handleAlgorithmSelection(event: Event): void {
@@ -18,4 +20,6 @@ export class AlgorithmSelectorComponent {
 
     this.algorithmHandler.selectAlgorithm(index);
   }
+  currentItem = 'ASDSA';
+
 }

@@ -1,3 +1,4 @@
+
 <select (change)="this.handleAlgorithmSelection($event)">
   <option [ngValue]="null" selected hidden>Select algorithm</option>
 
@@ -5,3 +6,4 @@
     <option [value]="index">{{ algorithm.type }}</option>
   }
 </select>
+<app-infobox [item]="currentItem"></app-infobox>
